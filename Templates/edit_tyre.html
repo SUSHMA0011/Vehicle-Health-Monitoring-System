@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Tyre</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <style>
+        body {
+            background-color: white;
+            color: #212529;
+            font-family: 'Roboto Slab', serif;
+        }
+        .container-fluid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+        main {
+            background-color: white;
+            color: black;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .table-responsive {
+            margin-top: 20px;
+        }
+        .table thead th {
+            border-bottom: 1px solid #333;
+            background-color: #176B87;
+            color: white;
+            border: none;
+        }
+        .table tbody tr {
+            transition: background-color 0.3s;
+        }
+        .table td, .table th {
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        /* input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        } */
+        .btn-primary {
+            margin-top: 20px;
+        }
+        .navbar-custom {
+            background-color: #176B87;
+            border-bottom: 1px solid #ffffff;
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #fff;
+        }
+        .table {
+            background-color: white;
+        }
+        #logout {
+            background-color: #0a3344;
+            color: white;
+        }
+
+        /* Custom CSS to remove DataTable box shadow */
+        .dataTables_wrapper .dataTables_scroll {
+            box-shadow: none;
+        }
+        .btn-custom{
+            background-color: #04364A;
+            color: #ffffff;
+          }
+    </style>
+</head>
+<body class="bg-light text-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <h2 style="color:#fff">BLUE LINE</h2>
+        <div class="ml-auto d-flex">
+            <div class="ml-auto">
+    
+                <form id="backForm" class="form-inline">
+                    <input type="hidden" name="driver_name" id="driver_name" value="{{ fuel.driver_name }}">
+                    <button type="button" id="logout" class="btn btn-sm d-flex align-items-center justify-content-center" onclick="location.href='/previewtyre/?driver_name={{ Tyre.driver_name }}'">
+                        <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+                    <span class="nav-link text-light" style="margin-left: 8px;font-size: 1.1em; font-weight: bold">Back</span>
+                        
+                    </button>
+                </form>
+                
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main">
+            <h2 class="heading-margin" style=color:#04364A><strong>Edit Tyre Details</strong></h2>
+            <br>
+        <form method="post" action="/saveeedit/{{ Tyre.id }}/?driver_name={{ Tyre.driver_name }}" id="tyreForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="vnumber">Vehicle Number<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" id="vnumber" name="vnumber" value="{{ Tyre.vnumber }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="driverName">Driver Name<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" id="driverName" name="driverName" value="{{ Tyre.driver_name }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="tyrenumber">Tyre Number<span style="color: red;">*</span></label>
+                    <input type="number" class="form-control" id="tyrenumber" name="tyrenumber" value="{{ Tyre.tyrenumber }}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="tyreType">Tyre Type<span style="color: red;">*</span></label>
+                <div class="d-flex">
+                    <div class="form-check mr-4">
+                    <input class="form-check-input" type="radio" name="tyre_type" id="newTyre" value="newTyre" {% if Tyre.tyre_type == 'newTyre' %}checked{% endif %} required>
+                    <label class="form-check-label" for="newTyre">New Tyre</label>
+                    </div>
+                <div class="form-check mr-4">
+                    <input class="form-check-input" type="radio" name="tyre_type" id="puncture" value="puncture" {% if Tyre.tyre_type == 'puncture' %}checked{% endif %} required>
+                    <label class="form-check-label" for="puncture">Puncture</label>
+                </div>
+                <div class="form-check mr-4">
+                    <input class="form-check-input" type="radio" name="tyre_type" id="resole" value="resole" {% if Tyre.tyre_type == 'resole' %}checked{% endif %} required>
+                    <label class="form-check-label" for="resole">Resole</label>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="date">Date<span style="color: red;">*</span></label>
+                    <input type="date" class="form-control" id="date" name="date" value="{{ Tyre.date|date:'Y-m-d' }}" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="kilometer">Kilometer<span style="color: red;">*</span></label>
+                    <input type="number" class="form-control" id="kilometer" name="kilometer" value="{{ Tyre.kilometer }}" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="billNumber">Bill Number<span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" id="billNumber" name="billNumber" value="{{ Tyre.bill_number }}" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="amount">Amount<span style="color: red;">*</span></label>
+                    <input type="number" class="form-control" id="amount" name="amount" value="{{ Tyre.amount }}" required>
+                </div>
+            
+                <div class="form-group col-md-8">
+                    <label for="tyreimage">Tyre Image<span style="color: red;">*</span></label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="tyreimage" name="tyreimage">
+                        <label class="custom-file-label" for="tyreimage" id="tyreimage-label">Choose file</label>
+                        <input type="hidden" name="existing_image" value="{{ Tyre.tyreimage.name }}">
+                    </div>
+                </div>
+            </div>
+            
+         <button type="submit" class="btn btn-custom" style="font-size: 1.1em">Update</button>
+                
+                
+            
+        </form>
+    </main>
+    </div>
+    </div>
+    <script src="{% static 'js/adminvalidation.js' %}" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tyreImageInput = document.getElementById('tyreimage');
+            var tyreImageLabel = document.getElementById('tyreimage-label');
+
+            tyreImageInput.addEventListener('change', function () {
+                var fileName = tyreImageInput.files.length > 0 ? tyreImageInput.files[0].name : "Choose file";
+                tyreImageLabel.textContent = fileName;
+            });
+
+            // Set the label to the existing image name if no new file is selected
+            var initialFileName = "{{ Tyre.tyreimage.name }}";
+            if (initialFileName) {
+                tyreImageLabel.textContent = initialFileName;
+            }
+        });
+    </script>
+</body>
+</html>

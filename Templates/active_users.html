@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- DataTables CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
+    
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #212529;
+            font-family: 'Roboto Slab', serif;
+        }
+        
+        .navbar-custom {
+            background-color: #176B87;
+            border-bottom: 1px solid #ffffff;
+            position: fixed;
+            width: 100%;
+            z-index: 1050;
+            top: 0;
+        }
+        
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #fff;
+        }
+
+        #back-button {
+            background-color: #0a3344;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #back-button i {
+            font-size: 1.2rem; /* Adjust icon size */
+            margin-right: 8px;
+        }
+
+        #back-button span {
+            font-size: 1rem; /* Adjust text size */
+            font-weight: bold;
+        }
+
+        
+
+        main {
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        
+
+        .table-responsive {
+            margin-top: 20px;
+        }
+
+        .table thead th {
+            border-bottom: 1px solid #333;
+            background-color: #176B87;
+            color: white;
+            border: none;
+            text-align: center;
+        }
+
+        .table tbody tr {
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-custom {
+            background-color: #04364A;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #176B87;
+            color: white;
+        }
+        h1{
+            color: #04364A;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                margin-top: 10px;
+                padding: 20px;
+            }
+
+            .table th,
+            .table td {
+                font-size: 0.875rem;
+            }
+        }
+
+    </style>
+</head>
+<body class="bg-light text-dark">
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <h2 style="color:#fff">BLUE LINE</h2>
+        <div class="ml-auto">
+            <button type="button" id="back-button" class="btn btn-sm d-flex align-items-center justify-content-center">
+                <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+                <a class="nav-link text-light" href="/adminhome/" style="margin-left: 1px; font-size: 1.1em; font-weight: bold;">Back</a>
+            </button>
+        </div>
+    </nav>
+    <main role="main" class="col-md-12 col-lg-12">
+    <div class="container">
+      <h1 class="text-center">Active Users</h1>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th><center><b>Name</b></center></th>
+                            <th><center><b>Contact</b></center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.firstname }}</td>
+                                <td>{{ user.contact }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- <a href="/adminhome/" class="btn btn-primary">Back to Admin Home</a> -->
+            </div>
+        </div>
+    </main>
+    
+    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable({
+                "pagingType": "full_numbers",
+                "lengthMenu": [5, 10, 25, 50],
+                "pageLength": 5
+            });
+        });
+    </script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

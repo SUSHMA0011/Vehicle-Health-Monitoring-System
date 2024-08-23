@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesign.min.css">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
+    <link rel="stylesheet" href="dist/css/adminlte.min.css?v=3.2.0">
+    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    body {
+        background-color: white;
+        color: #212529;
+        font-family: 'Roboto Slab', serif;
+    }
+   
+    main {
+        margin-left: 250px;
+        margin-top: 65px;
+        background-color: white;
+        padding-top: 15px;
+        
+        color: #04364A;
+    }
+    
+    #sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 260px;
+        padding-top: 90px;
+        background-color: #04364A;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+    #sidebar .nav-link {
+        color: #fff;
+    }
+    
+    #sidebar .nav-link.active {
+        background-color: #176B87;
+        color: #fff;
+    }
+    
+    #sidebar .user-info img {
+        border: 2px solid #007bff;
+    }
+    
+    .main {
+        background-color: white;
+        color: black;
+        padding: 20px;
+        min-height: 100vh;
+    }
+    
+    .navbar-custom {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1050;
+        background-color: #176B87;
+        border-bottom: 1px solid #ffffff;
+    }
+    
+    .navbar-custom .navbar-brand,
+    .navbar-custom .nav-link {
+        color: #fff;
+    }
+    
+
+    /* Card Styling */
+.card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    border: 2px solid #14688d;
+    
+    color: #04364A;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    transition: transform 0.3s; /* Add transition for hover effect */
+
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 15px 0;
+    
+    color: #04364A;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+}
+
+.card .card-title {
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+.card .card-text {
+    font-size: 1rem;
+    padding: 10px;
+}
+
+/* Chart Container Styling */
+#line-chart, #tyre-line-chart {
+    padding: 15px;
+    height: 300px; /* Fixed height for the chart */
+   
+}
+
+   
+    .btn-custom:hover {
+        background-color: #138496;
+    }
+    
+    .icon {
+        font-size: 2rem;
+        color: #007bff;
+        margin-bottom: 10px;
+        
+    }
+    
+
+    .radio-custom {
+        display: inline-block;
+        margin: 10px;
+    }
+    .smaller-card {
+        height: auto;
+        padding: 10px;
+    }
+    .smaller-card h3 {
+        font-size: 1.5rem;
+    }
+    .smaller-card .radio-custom {
+        margin-top: 10px;
+    }
+
+    .small-box {
+        border-radius: 15px;
+        
+       
+        margin-top: 10px;
+        background-color: #053c51;
+        padding: 15px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+    }
+    .btn-custom {
+        background-color: #176B87;
+        border-color: #176B87;
+        color: #fff;
+        border: none;
+        padding: 5px 10px; /* Adjusted padding for a smaller button */
+        border-radius: 30px;
+        transition: background-color 0.3s ease;
+        display: block; /* Ensures the button takes full width */
+        width: 40%; 
+        
+        margin: 0 auto; /* Centers the button */
+        text-align: center; /* Centers text inside button */
+    }
+    .btn-custom:hover {
+        background-color: #138496;
+    }
+
+
+    .small-box:hover .icon {
+        transform: scale(1.2);
+    }
+    .small-box .inner {
+        padding: 5px 10px;
+    }
+    .small-box h3 {
+        font-size: 2.2rem;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+        padding: 0;
+        white-space: nowrap;
+    }
+    .small-box p {
+        font-size: 1rem;
+    }
+    .small-box .icon {
+        color: rgb(253, 252, 255);
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 0;
+        transition: transform 0.3s ease;
+    }
+    .small-box a {
+        color: rgba(255, 255, 255, 0.8);
+        display: block;
+        padding: 5px 0;
+        position: relative;
+        text-align: center;
+        z-index: 10;
+    }
+    .small-box a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    #logout {
+        background-color:#0a3344;
+        color: white;
+
+    } 
+    #recent {
+        border: 2px solid #14688d;
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+    } 
+    #recent-logins th, #recent-logins td {
+        border: 1px solid black;
+        text-align: center;
+        padding: 8px;
+    }
+
+    #recent-logins thead th {
+        background-color: #f2f2f2;
+    }
+    h2{
+        color: #04364A;
+    }
+    .scroll-bar-container {
+        display: flex;
+        justify-content: center;
+        
+    }
+    
+    .scroll-bar-container button {
+        background-color: #526D82;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 5px;
+        font-size: 16px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .scroll-bar-container button:hover {
+        background-color: #9DB2BF;
+    }
+    
+    .scroll-bar-container button:active {
+        background-color: #27374D;
+    }
+    
+    .scroll-bar-container button:focus {
+        outline: none;
+    }
+    
+    #prev, #next {
+        background-color:#0a3344;
+        color: white;
+        border: none;
+       
+      
+        font-size: 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    #prev:hover, #next:hover {
+        background-color:#0c5472;
+    }
+    
+    #prev:active, #next:active {
+        background-color: #27374D;
+    }
+    
+    #prev:focus, #next:focus {
+        outline: none;
+    }
+    .card {
+        background-color: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .radio-custom {
+        display: inline-block;
+        margin: 10px;
+    }
+    
+    .radio-custom input[type="radio"] {
+        margin-right: 5px;
+    }
+    
+    .text-center {
+        margin-top: 20px;
+    }
+    #chart-container {
+        padding: 15px;
+        height: 250px;
+        
+    }
+    
+    #combined-chart-container, #weekly-chart-container {
+        height: 250px;
+        margin-top: 20px;
+    }
+    
+    
+
+</style>
+<!-- Google Charts API -->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(initialize);
+
+    var fuelChartData = {{ fuel_chart_data|safe }};
+    var tyreChartData = {{ tyre_chart_data|safe }};
+    var monthlyChartData = {{ monthly_chart_data|safe }};
+    var weeklyChartData = {{ weekly_chart_data|safe }};
+    var currentIndex = 1;
+    var maxBars = 5;
+
+    function drawChart(data, elementId) {
+        var chartData = google.visualization.arrayToDataTable(data);
+        var options = {
+            backgroundColor: 'transparent',
+            colors: ['cornflowerblue'],
+            fontName: 'Open Sans',
+            focusTarget: 'category',
+            chartArea: {
+                left: 50,
+                top: 10,
+                width: '80%',
+                height: '70%'
+            },
+            hAxis: {
+                textStyle: {
+                    fontSize: 11
+                },
+                baselineColor: '#DDD',
+                gridlines: {
+                    color: '#DDD',
+                    count: 5
+                }
+            },
+            vAxis: {
+                minValue: 0,
+                baselineColor: '#DDD',
+                gridlines: {
+                    color: '#DDD',
+                    count: 5
+                },
+                textStyle: {
+                    fontSize: 11
+                }
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 12
+                }
+            },
+            animation: {
+                duration: 1200,
+                easing: 'out',
+                startup: true
+            }
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById(elementId));
+        chart.draw(chartData, options);
+    }
+
+    function drawFuelChart() {
+        var displayedData = getDisplayedData(fuelChartData);
+        drawChart(displayedData, 'chart-container');
+    }
+
+    function drawTyreChart() {
+        var displayedData = getDisplayedData(tyreChartData);
+        drawChart(displayedData, 'chart-container');
+    }
+
+    function drawCombinedChart(data, elementId) {
+        var chartData = google.visualization.arrayToDataTable(data);
+        var options = {
+            backgroundColor: 'transparent',
+            colors: ['cornflowerblue', 'darkorange'],
+            fontName: 'Open Sans',
+            focusTarget: 'category',
+            chartArea: {
+                left: 50,
+                top: 10,
+                width: '80%',
+                height: '70%'
+            },
+            hAxis: {
+                textStyle: {
+                    fontSize: 11
+                },
+                baselineColor: '#DDD',
+                gridlines: {
+                    color: '#DDD',
+                    count: 5
+                }
+            },
+            vAxis: {
+                minValue: 0,
+                baselineColor: '#DDD',
+                gridlines: {
+                    color: '#DDD',
+                    count: 5
+                },
+                textStyle: {
+                    fontSize: 11
+                }
+            },
+            legend: {
+                position: 'bottom',
+                textStyle: {
+                    fontSize: 12
+                }
+            },
+            animation: {
+                duration: 1200,
+                easing: 'out',
+                startup: true
+            }
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById(elementId));
+        chart.draw(chartData, options);
+    }
+
+    function drawCombinedMonthlyChart() {
+        drawCombinedChart(monthlyChartData, 'combined-chart-container');
+    }
+
+    function drawCombinedWeeklyChart() {
+        drawCombinedChart(weeklyChartData, 'combined-chart-container');
+    }
+
+    function getDisplayedData(data) {
+        var header = data[0];
+        var rows = data.slice(currentIndex, currentIndex + maxBars);
+        return [header].concat(rows);
+    }
+
+    function prev() {
+        if (currentIndex > 1) {
+            currentIndex--;
+            if (document.getElementById('fuel-radio').checked) {
+                drawFuelChart();
+            } else if (document.getElementById('tyre-radio').checked) {
+                drawTyreChart();
+            } else if (document.getElementById('combined-monthly-radio').checked) {
+                drawCombinedMonthlyChart();
+            } else if (document.getElementById('combined-weekly-radio').checked) {
+                drawCombinedWeeklyChart();
+            }
+        }
+    }
+
+    function next() {
+        var data = document.getElementById('fuel-radio').checked ? fuelChartData :
+            document.getElementById('tyre-radio').checked ? tyreChartData :
+            document.getElementById('combined-monthly-radio').checked ? monthlyChartData :
+            document.getElementById('combined-weekly-radio').checked ? weeklyChartData : []
+        if (currentIndex + maxBars < data.length) {
+            currentIndex++;
+            if (document.getElementById('fuel-radio').checked) {
+                drawFuelChart();
+            } else if (document.getElementById('tyre-radio').checked) {
+                drawTyreChart();
+            } else if (document.getElementById('combined-monthly-radio').checked) {
+                drawCombinedMonthlyChart();
+            } else if (document.getElementById('combined-weekly-radio').checked) {
+                drawCombinedWeeklyChart();
+            }
+        }
+    }
+
+    function initialize() {
+        document.getElementById('fuel-radio').checked = true;
+        drawFuelChart();
+        document.getElementById('combined-monthly-radio').checked = true;
+        drawCombinedMonthlyChart();
+    }
+
+    window.onload = initialize;
+
+</script>
+
+</head>
+<body class="text-light">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <h2 style="color:#fff">BLUE LINE</h2>
+    <div class="ml-auto">
+        <button type="button" id="logout" class="btn btn-sm d-flex align-items-center justify-content-center">
+            <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+            <a class="nav-link text-light" href="/adminlogin/" style="margin-left: 1px; font-size: 1.1em; font-weight: bold;">Logout</a>
+        </button>
+    </div>
+</nav> 
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                            <span class="username">Admin</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/addvehicle/">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                            <span class="username">Add Vehicle Details</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/userregister/">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                            <span class="username">Add Employee</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/viewuser/">
+                            <i class="mdi mdi-comment-multiple-outline menu-icon"></i>
+                            <span class="username">View Employee</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vehicledetails/">
+                            <i class="mdi mdi-checkbox-multiple-blank menu-icon"></i>
+                            <span class="username">View Vehicle</span> 
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admintyre/">
+                            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                            <span class="username">View Tyre</span> 
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/vehiclefuel/">
+                            <i class="fa-solid fa-gas-pump" aria-hidden="true"></i>
+                            <span class="username">View Fuel</span> 
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- Main content -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <h2 class="heading-margin"><b>Admin Dashboard
+            </b></h2>
+             <!-- Cards and pagination -->
+             <div class="row">
+                <div class="col-lg-3 col-6">
+                    
+                        <div class="small-box  ">
+                            <div class="inner">
+                            
+                            <div class="icon">
+                                <i class="fas fa-key icon"></i>
+                                </div>
+                            <h5 class="card-title">Password Request</h5>
+                            <p class="card-text">{{ password_request_count }} requests</p>
+                            <a href="/checkrequest/" class="btn btn-custom ">Check <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="small-box  ">
+                        <div class="inner">
+                            <div class="icon">
+                            <i class="fas fa-cog icon"></i>
+                            </div>
+                            <h5 class="card-title">Tyre Change</h5>
+                            <p class="card-text">{{ total_tyres_count }} Tyre</p>
+                            <a href="/admintyre/" class="btn btn-custom">Check <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="small-box  ">
+                        <div class="inner">
+                            <div class="icon">
+                            <i class="fas fa-users icon"></i>
+                        </div>
+                            <h5 class="card-title">Active Users</h5>
+                            <p class="card-text">{{ active_users_count }} Active Users</p>
+                            <a href="/active_users/" class="btn btn-custom">Check <i class="fas fa-arrow-circle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            
+            <!-- Tyre Change Graph -->
+            <div class="row">
+                <div class="col-md-6" id="card">
+                    <div class="card">
+                        <h3>Expenses Over Time</h3>
+                        <div id="chart-container"></div>
+                        <div class="text-center">
+                            <div class="radio-custom">
+                        <input type="radio" id="fuel-radio" name="chartType" onclick="drawFuelChart()">
+                        <label for="fuel-radio">Fuel Expenses</label>
+                    </div>
+                    <div class="radio-custom">
+                        <input type="radio" id="tyre-radio" name="chartType" onclick="drawTyreChart()">
+                        <label for="tyre-radio">Tyre Expenses</label>
+                    </div>
+                        </div>
+
+
+                        <div class="scroll-bar-container">
+                            <button id="prev" onclick="prev()">Prev</button>
+                            <button id="next" onclick="next()">Next</button>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+                    <div class="col-md-6 text-center" id="recent"><br>
+                        <h5>Recent Logins:</h5><br>
+                        
+                        <table id="recent-logins" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th>Login Time</th>
+                                    <th>Logout Time</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for detail in login_details %}
+                                <tr>
+                                    <td>{{ detail.firstname }}</td> 
+                                    <td>{{ detail.contact }}</td>       
+                                    <td>{{ detail.login_time }}</td>
+                                    <td>{{ detail.logout_time }}</td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+               
+            </div>
+            <!-- Tyre Change Graph -->
+             <!-- Combined Monthly and Weekly Chart Containers -->
+             <div class="row">
+                <div class="col-md-6" id="card">
+                    <div class="card smaller-card">
+                        <h3>Expenses Over Time</h3>
+                        <div id="combined-chart-container"></div>
+                        <div class="text-center">
+                            <div class="radio-custom">
+                                <input type="radio" id="combined-monthly-radio" name="chartType" onclick="drawCombinedMonthlyChart()">
+                                <label for="combined-monthly-radio">Monthly Combined Expenses</label>
+                            </div>
+                            <div class="radio-custom">
+                                <input type="radio" id="combined-weekly-radio" name="chartType" onclick="drawCombinedWeeklyChart()">
+                                <label for="combined-weekly-radio">Weekly Combined Expenses</label>
+                            </div>
+                        </div>
+     
+                    </div>
+                </div>
+            </div>
+        </main> 
+                </div>  
+            </div>  
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#recent-logins').DataTable({
+            "pagingType": "full_numbers", // Adds pagination numbers
+            "lengthMenu": [5, 10, 25, 50], // Customize the page length menu
+            "pageLength": 5, // Default page length
+            "searching": true, // Enable search functionality
+            "ordering": true, // Enable column sorting
+            "info": true, // Enable table information display
+            "autoWidth": false, // Disable auto-width
+            "responsive": true
+
+        });
+    });
+</script>
+
+</body>
+</html>

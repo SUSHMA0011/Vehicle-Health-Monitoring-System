@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Fuel</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <style>
+        body {
+            background-color: white;
+            color: #212529;
+            font-family: 'Roboto Slab', serif;
+            font-size: normal; /* Ensure default font weight is normal */
+        }
+        
+        .container-fluid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+        main {
+            background-color: white;
+            color: black;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .table-responsive {
+            margin-top: 20px;
+        }
+        .table thead th {
+            border-bottom: 1px solid #333;
+            background-color: #176B87;
+            color: white;
+            border: none;
+        }
+        .table tbody tr {
+            transition: background-color 0.3s;
+        }
+        .table td, .table th {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .btn-primary {
+            margin-top: 20px;
+        }
+        .navbar-custom {
+            background-color: #176B87;
+            border-bottom: 1px solid #ffffff;
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #fff;
+        }
+        .table {
+            background-color: white;
+        }
+        #logout {
+            background-color: #0a3344;
+            color: white;
+        }
+        /* Custom CSS to remove DataTable box shadow */
+        .dataTables_wrapper .dataTables_scroll {
+            box-shadow: none;
+        }
+        .btn-custom{
+            background-color: #04364A;
+            color: #ffffff;
+          }
+    </style>
+</head>
+<body class="bg-light text-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <h2 style="color:#fff">BLUE LINE</h2>
+        <div class="ml-auto d-flex">
+            <div class="ml-auto">
+            <form action="/previewfuel/" method="get" class="form-inline">
+                <input type="hidden" name="driverName" value="{{ fuel.driverName }}">
+                <button type="submit" id="logout" class="btn btn-sm d-flex align-items-center justify-content-center">
+                    <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+                    <span class="nav-link text-light" style="margin-left: 8px;font-size: 1.1em; font-weight: bold">Back</span>
+                </button>
+            </form>
+            </div>
+        </div>
+    </nav> 
+
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main">
+                <h2 class="heading-margin" style=color:#04364A><strong>Edit Fuel Details</strong></h2>
+                <br>
+                <form method="post" action="/saveedit/{{ fuel.id }}/?driverName={{ fuel.driverName }}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="vnumber">Vehicle Number<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="vnumber" id="vnumber" value="{{ fuel.vnumber }}" autocomplete="off" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="driverName">Name of the Driver<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="driverName" id="driverName" value="{{ fuel.driverName }}" autocomplete="off" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="date">Date<span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" id="date" name="date" value="{{ fuel.date|date:'Y-m-d' }}" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="billNumber">Bill Number</label>
+                            <input type="text" class="form-control" name="billNumber" id="billNumber" value="{{ fuel.billNumber }}" autocomplete="off" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="fuelStation">Fuel Station<span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="fuelStation" id="fuelStation" value="{{ fuel.fuelStation }}" autocomplete="off" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="liter">Liters<span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" name="liter" id="liter" value="{{ fuel.liter }}" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="amount">Amount<span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" name="amount" id="amount" value="{{ fuel.amount }}" autocomplete="off" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="readings">Readings (Kilometer)<span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" name="readings" id="readings" value="{{ fuel.readings }}" autocomplete="off" required>
+                        </div>   
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="fuelimage">Fuel Image<span style="color: red;">*</span></label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="fuelimage" name="fuelimage" accept="image/*">
+                                <label class="custom-file-label" for="fuelimage" id="fuelimage-label">{{ fuel.fuelimage.name }}</label>
+                            </div>
+                            <input type="hidden" name="existing_image" value="{{ fuel.fuelimage.name }}">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-custom">Update</button>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- DataTables JavaScript -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var fuelImageInput = document.getElementById('fuelimage');
+            var fuelImageLabel = document.getElementById('fuelimage-label');
+
+            fuelImageInput.addEventListener('change', function () {
+                var fileName = fuelImageInput.files.length > 0 ? fuelImageInput.files[0].name : "{{ fuel.fuelimage.name }}";
+                fuelImageLabel.textContent = fileName;
+            });
+
+            // Set the label to the existing image name if no new file is selected
+            var initialFileName = "{{ fuel.fuelimage.name }}";
+            if (initialFileName) {
+                fuelImageLabel.textContent = initialFileName;
+            }
+        });
+    </script>
+</body>
+</html>

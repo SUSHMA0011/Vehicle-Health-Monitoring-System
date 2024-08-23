@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tyre Records for Vehicle</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    
+    <style>
+        body {
+            background-color: white;
+            color: #212529;
+            font-family: 'Roboto Slab', serif;
+        }
+        main {
+            margin-left: 250px;
+            margin-top: 65px;
+            background-color: white;
+            padding-top: 15px;
+            
+            color: black;
+            
+         
+        }
+        #sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 260px;
+            padding-top: 90px;
+            background-color: #04364A;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        #sidebar .nav-link {
+            color: #fff;
+        }
+        
+        #sidebar .nav-link.active {
+            background-color: #176B87;
+            color: #fff;
+        }
+        #sidebar .user-info img {
+            border: 2px solid #007bff;
+        }
+        .navbar-custom {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+            background-color: #176B87;
+            border-bottom: 1px solid #ffffff;
+        }
+        
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #fff;
+        }
+
+
+        .main {
+            background-color: white;
+            color: black;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .table-wrapper {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-body {
+            text-align: center;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            margin: 15% auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80%;
+            width: auto;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+        }
+        .close:hover, .close:focus {
+            color: #999;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .thead-custom {
+            background-color: #176B87;
+            color: white;
+        }
+        #logout {
+            background-color: #0a3344;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #145774;
+            color: rgb(239, 244, 246);   
+        }
+        
+        h2{
+            color: #04364A;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: 20% auto;
+            max-width: 500px; /* Adjust size as needed */
+            max-height: 40%; /* Adjust size as needed */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+        
+        .modal-img {
+            max-width: 150%; /* Ensure image fits within modal-content */
+            max-height: 100%; /* Ensure image fits within modal-content */
+           
+        }
+        
+        .close {
+            
+            top: -15%;
+            right: -10px;
+            left: 580px;
+            color: rgb(239, 8, 8);
+            font-size: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover, .close:focus {
+            color: #d62a2a;
+            text-decoration: none;
+        }
+        
+        
+        
+    </style>
+</head>
+<body class=" text-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <h2 style="color:#fff">BLUE LINE</h2>
+        <div class="ml-auto">
+            <button type="button" id="logout" class="btn btn-sm d-flex align-items-center justify-content-center">
+                <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+                <a class="nav-link text-light" href="/adminlogin/" style="margin-left: 1px; font-size: 1.1em; font-weight: bold;">Logout</a>
+            </button>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/adminhome/">
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                <span class="username">Admin</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/addvehicle/">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                <span class="username">Add Vehicle Details</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/userregister/">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                <span class="username">Add Employee</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/viewuser/">
+                                <i class="mdi mdi-comment-multiple-outline menu-icon"></i>
+                                <span class="username">View Employee</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/vehicledetails/">
+                                <i class="mdi mdi-checkbox-multiple-blank menu-icon"></i>
+                                <span class="username">View Vehicle</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/admintyre/">
+                                <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                                <span class="username">View Tyre</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/vehiclefuel/">
+                                <i class="fa-solid fa-gas-pump" aria-hidden="true"></i>
+                                <span class="username">View Fuel</span>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="/adminpassword/">
+                                <i class="mdi mdi-account-key menu-icon"></i>
+                                <span class="username">Password Request</span>
+                            </a>
+                        </li> -->
+                    </ul>
+                </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4  ">
+                
+                <div class="container-fluid">
+                    <h2 class="heading-margin"><b>Tyre Records</b></h2>
+                    <!-- <input type="text" id="searchInput" class="form-control search-bar" placeholder="Search records..."> -->
+                    <div class="table-wrapper">
+                        <table class="table table-striped table-bordered" id="tyreTable">
+                            <thead class="thead-custom">
+                                <tr>
+                                    <th style="font-size: 0.9em;">Vehicle Number</th>
+                                    <th style="font-size: 0.9em;">Driver Name</th>
+                                    <th style="font-size: 0.9em;">Tyre Number</th>
+                                    <th style="font-size: 0.9em;">Type</th>
+                                    <th style="font-size: 0.9em;">Date</th>
+                                    <th style="font-size: 0.9em;">Kilometer</th>
+                                    <th style="font-size: 0.9em;">Bill Number</th>
+                                    <th style="font-size: 0.9em;">Amount</th>
+                                    <th style="font-size: 0.9em;">Tyre Image</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for Tyre in tyres %}
+                                    <tr>
+                                        <td style="font-size: 0.9em;">{{ Tyre.vnumber }}</td>
+                                        <td style="font-size: 0.9em;">{{ Tyre.driver_name }}</td>
+                                        <td style="font-size: 0.9em;">{{ Tyre.tyrenumber }}</td>
+                                        <td style="font-size: 0.9em;">{{ Tyre.tyre_type }}</td>
+                                        <td style="font-size: 0.9em;">{{ Tyre.date }}</td>
+                                        <td style="font-size: 0.9em;">{{ Tyre.kilometer }}</td>
+                                        <td style="font-size: 0.9em;">{{ Tyre.bill_number }}</td>
+                                        <td style="font-size: 0.9em;">{{ Tyre.amount }}</td>
+                                        <td>
+                                            <a href="#" onclick="showImage('{{ Tyre.tyreimage.url }}')">View Image</a>
+                                        </td>
+                                        
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                        <div id="imageModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close" onclick="closeModal()">&times;</span>
+                                <img class="modal-img" id="modalImg">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <h2 class="heading-margin"><b>Tyre Change</b></h2>
+                    <div class="table-wrapper">
+                        <table class="table table-striped table-bordered" id="alertTyreTable">
+                            <thead class="thead-custom">
+                                <tr>
+                                    <th style="font-size: 0.9em;">Vehicle Number</th>
+                                    <th style="font-size: 0.9em;">Tyre Number</th>
+                                    <th style="font-size: 0.9em;">Kilometer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for Tyre in alert_tyres %}
+                                    <tr>
+                                        <td style="font-size: 0.9em;">{{ Tyre.vnumber }}</td>
+                                        <td style="font-size: 0.9em;">{{ Tyre.tyrenumber }}</td>
+                                        <td style="font-size: 0.9em;">{{ Tyre.kilometer }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div>
+                        <a href="/adminhome/" class="btn btn-secondary mt-3">Back to home</a>
+                    </div> -->
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tyreTable').DataTable({
+                "pagingType": "full_numbers", // Adds pagination numbers
+                "lengthMenu": [5, 10, 25, 50], // Customize the page length menu
+                "pageLength": 5, // Default page length
+                "searching": true, // Enable search functionality
+                "ordering": true, // Enable column sorting
+                "info": true, // Enable table information display
+                "autoWidth": false, // Disable auto-width
+                "responsive": true // Enable responsive mode
+            });
+            $('#alertTyreTable').DataTable({
+                "pagingType": "full_numbers", // Adds pagination numbers
+                "lengthMenu": [5, 10, 25, 50], // Customize the page length menu
+                "pageLength": 5, // Default page length
+                "searching": true, // Enable search functionality
+                "ordering": true, // Enable column sorting
+                "info": true, // Enable table information display
+                "autoWidth": false, // Disable auto-width
+                "responsive": true // Enable responsive mode
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            var input = document.getElementById('searchInput');
+            var filter = input.value.toLowerCase();
+            var table = document.getElementById('tyreTable');
+            var rows = table.getElementsByTagName('tr');
+
+            for (var i = 1; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName('td');
+                var match = false;
+
+                for (var j = 0; j < cells.length; j++) {
+                    if (cells[j].innerText.toLowerCase().indexOf(filter) > -1) {
+                        match = true;
+                        break;
+                    }
+                }
+
+                if (match) {
+                    rows[i].style.display = '';
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        });
+
+        function showImage(imageUrl) {
+            var modal = document.getElementById("imageModal");
+            var modalImg = document.getElementById("modalImg");
+            modal.style.display = "block";
+            modalImg.src = imageUrl;
+        }
+        
+        function closeModal() {
+            var modal = document.getElementById("imageModal");
+            modal.style.display = "none";
+        }
+        
+
+        
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const navLinks = document.querySelectorAll('#sidebar .nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

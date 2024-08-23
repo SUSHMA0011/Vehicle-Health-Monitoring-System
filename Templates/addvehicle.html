@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Vehicle Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: white;
+            color: #212529;
+            font-family: 'Roboto Slab', serif;
+        }
+        main {
+            margin-left: 250px;
+            margin-top: 65px;
+            background-color: white;
+            padding-top: 15px;
+            
+            color: #04364A;
+            
+            
+        }
+        
+        #sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 260px;
+            padding-top: 90px;
+            background-color: #04364A;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        #sidebar .nav-link {
+            color: #fff;
+        }
+        
+        #sidebar .nav-link.active {
+            background-color: #176B87;
+            color: #fff;
+        }
+        #sidebar .user-info img {
+            border: 2px solid #007bff;
+        }
+        .main {
+            background-color: white;
+            color: #04364A;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .navbar-custom {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+            background-color: #176B87;
+            border-bottom: 1px solid #ffffff;
+        }
+        h2{
+            color: #04364A;
+        }
+        
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #fff;
+        }
+
+       
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group input {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 20px;
+            padding: 12px;
+            width: 100%;
+            margin: 5px 0;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #176B87;
+            box-shadow: 0 0 0 0.2rem rgba(23, 107, 135, 0.25);
+        }
+
+        .form-group input[required]::after {
+            content: '*';
+            color: red;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            pointer-events: none;
+        }
+
+       
+
+        #togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #04364A;
+        }
+        
+
+        #submit {
+            background-color: #04364A;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 50px;
+            color: #ffffff;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            
+        }
+        .heading-margin {
+            margin-bottom: 30px; /* Adjust the margin as needed */
+            color: #04364A;
+            
+            
+
+        }
+
+        .container h1 {
+            color: #04364A;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        #submit:hover {
+            background-color: #176B87;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.875em;
+            margin-top: 5px;
+        }
+        .bold-heading {
+            font-weight: bold;
+        }
+        #logout {
+            background-color:#0a3344;
+            color: white;
+
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <h2 style="color:#fff">BLUE LINE</h2>
+        <div class="ml-auto">
+            <button type="button" id="logout" class="btn btn-sm d-flex align-items-center justify-content-center">
+                <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+                <a class="nav-link text-light" href="/adminlogin/" style="margin-left: 1px; font-size: 1.1em; font-weight: bold;">Logout</a>
+            </button>
+        </div>
+    </nav> 
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block  sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/adminhome/">
+                                <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                <span class="username">Admin</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/addvehicle/">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                <span class="username">Add Vehicle Details</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/userregister/">
+                                <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                <span class="username">Add Employee</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/viewuser/">
+                                <i class="mdi mdi-comment-multiple-outline menu-icon"></i>
+                                <span class="username">View Employee</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/vehicledetails/">
+                                <i class="mdi mdi-checkbox-multiple-blank menu-icon"></i>
+                                <span class="username">View Vehicle</span> 
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admintyre/">
+                                <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                                <span class="username">View Tyre</span> 
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/vehiclefuel/">
+                                <i class="fa-solid fa-gas-pump" aria-hidden="true"></i>
+                                <span class="username">View Fuel</span> 
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <div>
+        <h2 class="heading-margin"><b>Add Vehicle Details</b></h2>
+        <form action="/addnewvehicle/" method="POST" onsubmit="return handleLogin()">
+            {% csrf_token %}
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-3 text-center">
+                    <label for="name"><b>Name</b><span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" name="name" id="name" autocomplete="off" required>
+                </div>
+                <div class="form-group col-md-3 text-center">
+                    <label for="model"><b>Model</b><span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" name="model" id="model" autocomplete="off" required>
+                </div>
+                <div class="form-group col-md-3 text-center">
+                    <label for="vnumber"><b>Vehicle Registration Number</b><span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" name="vnumber" id="vnumber" autocomplete="off" maxlength="10" required>
+                </div>
+                <div class="form-group col-md-3 text-center">
+                    <label for="cnumber"><b>Chassis Number</b><span style="color: red;">*</span></label>
+                    <input type="text" class="form-control" name="cnumber" id="cnumber" autocomplete="off" maxlength="17" required>
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-md-1 d-flex align-items-end">
+                    <button type="submit" id="submit" class="btn btn-primary btn-block mx-auto">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+            
+            
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const navLinks = document.querySelectorAll('#sidebar .nav-link');
+        
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Remove active class from all links
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    // Add active class to the clicked link
+                    this.classList.add('active');
+                });
+            });
+
+            // Add event listener to name input field
+            const nameInput = document.getElementById("name");
+            nameInput.addEventListener("input", function() {
+                this.value = this.value.replace(/[^A-Za-z\s]/g, '');
+            });
+        });
+
+        function handleLogin() {
+            // Validation for Name
+            var name = document.getElementById("name").value;
+            var nameRegex = /^[A-Za-z\s]+$/;
+            if (!nameRegex.test(name)) {
+                alert("Name can only contain letters and spaces!");
+                return false;
+            }
+
+            // Validation for Vehicle Number
+            var vnumber = document.getElementById("vnumber").value;
+            var vnumberRegex = /^[A-Za-z]{2}\d{2}[A-Za-z]{2}\d{4}$/; // Example: KA01AB1234
+            if (!vnumberRegex.test(vnumber)) {
+                alert("Invalid Vehicle Number format!");
+                return false;
+            }
+
+            // Validation for Chassis Number
+            var cnumber = document.getElementById("cnumber").value;
+            var cnumberRegex = /^[A-Za-z0-9]{17}$/; // Example: MA1R2E3G4H5K6L7M8N
+            if (!cnumberRegex.test(cnumber)) {
+                alert("Invalid Chassis Number format!");
+                return false;
+            }
+
+            alert("Added Successfully!"); 
+            window.location.href = "/addvehicle/"; // Change the URL to your admin home page
+            return true;
+        }
+    </script>
+</body>
+</html>

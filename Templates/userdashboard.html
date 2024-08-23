@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    
+    body {
+      background-color: white;
+      color: #212529;
+      font-family: 'Roboto Slab', serif;
+  }
+  main {
+    margin-left: 250px;
+    margin-top: 65px;
+    background-color: white;
+    padding-top: 15px;
+    
+    color: #04364A;
+    
+ 
+}
+  #sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 260px;
+    padding-top: 90px;
+    background-color: #04364A;
+    z-index: 1000;
+    overflow-y: auto;
+}
+    #sidebar .nav-link {
+      color: #fff;
+    }
+    #sidebar .nav-link.active {
+      background-color: #15708b;
+      color: #fff;
+    }
+    #sidebar .user-info img {
+      border: 2px solid #165191;
+    }
+    .navbar-custom {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1050;
+      padding-bottom: 10px;
+      background-color: #176B87;
+      border-bottom: 1px solid #ffffff;
+  }
+    .navbar-custom .navbar-brand,
+    .navbar-custom .nav-link {
+      color: #fff;
+    }
+    .nav-link.active {
+      background-color: #3c6087;
+      color: white !important;
+      
+    }
+    .content-section {
+      display: none;
+      margin-top: 0.5%;
+    }
+    .content-section.active {
+      display: block;
+    }
+    .tyre-form-section {
+      display: none;
+    }
+    .main {
+      background-color: white;
+      color: #04364A;
+      padding: 20px;
+      min-height: 100vh;
+  }
+    #about-vehicle {
+      padding: 40px;
+    }
+    
+    .card {
+      background-color: #e4eff9; /* Light grey background for the card */
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(93, 37, 37, 0.1);
+      padding: 20px;
+      border: none;
+    }
+    
+    .card-header {
+      border-radius: 10px 10px 0 0;
+      background-color: #072a50; /* Changed card header color */
+      color: white;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+    }
+    
+    .card-title {
+      font-size: 24px;
+      margin-bottom: 0;
+    }
+    
+    .card-text {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    
+    .card-text strong {
+      color: #03172e; /* Dark blue color */
+    }
+    
+    .fa-bus {
+      margin-right: 10px;
+    }
+    
+    .card-text i {
+      margin-right: 10px;
+    }
+    
+    .form-card {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 600px;
+      margin: 40px auto;
+    }
+    
+    .form-header {
+      background-color: #185a7b;
+      color: white;
+      padding: 10px;
+      border-radius: 10px 10px 0 0;
+      text-align: center;
+    }
+    
+    .form-header h3 {
+      margin: 0;
+    }
+    
+    .form-group label {
+      color: #0e394a;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .form-control {
+      border-radius: 50px;
+      box-shadow: 2 2px 4px rgba(15, 2, 2, 0.1);
+      margin-bottom: 15px;
+    }
+    
+    .form-check-input {
+      margin-right: 10px;
+    }
+    
+    .btn-custom{
+      background-color: #04364A;
+      color: #ffffff;
+    }
+    
+    
+    
+    
+    
+    
+   
+    
+    /* Animation for the welcome message */
+    @keyframes fadeIn {
+      from {
+        opacity: 2x;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1x;
+        transform: translateY(2);
+      }
+    }
+    
+    .welcome-message {
+      animation: fadeIn 2s ease-in-out;
+      color: rgb(30, 75, 135);
+      font-family: 'Roboto Slab', serif;;
+      
+    }
+    
+  </style>
+</head>
+<body class=" text-light">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <h2 style="color:#fff">BLUE LINE</h2>
+  </nav>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#about-vehicle">
+                <i class="fa-solid fa-bus-simple" aria-hidden="true"></i>
+                <span class="username">About Vehicle</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#fuel-section">
+                <i class="fa-solid fa-gas-pump" aria-hidden="true"></i>
+                <span class="username">Fuel</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#tyre">
+                <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                <span class="username">Tyre</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/userlogin/">
+                <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                <span class="username">Logout</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color: white; color: black;">
+        <!-- Success message modal -->
+        <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="modalMessage"></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="about-vehicle" class="content-section active text-center">
+          {% if user %}
+          <h1 class="mb-4 welcome-message">WELCOME {{ user.firstname }}</h1>
+          {% else %}
+          <h1 class="mb-4 welcome-message">WELCOME</h1>
+          {% endif %}
+        
+          {% if vehicle %}
+          <div class="card text-left mx-auto" style="max-width: 600px;">
+            <div class="card-header text-white">
+     
+                <h3 class="card-title"><i class="fas fa-bus"></i> About Vehicle</h3>
+              </div>
+              <div class="card-body">
+                <p class="card-text animated-card" style="animation-delay: 0.5s;"><i class="fa fa-car"></i><strong>Name of the Vehicle:</strong> {{ vehicle.name }}</p>
+                <p class="card-text animated-card" style="animation-delay: 0.5s;"><i class="fa fa-cogs"></i><strong>Model Name:</strong> {{ vehicle.model }}</p>
+                <p class="card-text animated-card" style="animation-delay: 0.6s;"><i class="fa fa-id-card"></i><strong>Vehicle Number:</strong> {{ vehicle.vnumber }}</p>
+                <p class="card-text animated-card" style="animation-delay: 0.8s;"><i class="fa fa-barcode"></i><strong>Chassis Number:</strong> {{ vehicle.cnumber }}</p>
+                <p class="card-text animated-card" style="animation-delay: 1.0s;"><i class="fa fa-file-alt"></i><strong>Rc Number:</strong> {{ vehicle.rcnumber }}</p>
+              </div>
+            </div>
+            {% else %}
+            <!-- <p>No vehicle information available.</p> -->
+            {% endif %}
+          </div>
+
+   
+
+        
+          <div id="fuel-section" class="content-section">
+            {% if user %}
+                {% if vehicle %}
+                <!-- <div class="form-card"> -->
+                  <div>
+                    <h2 style=color:#04364A><b>Fuel Entry</b></h2>
+                    <form action="/previewfuel/" method="get" class="mb-4">
+                        <input type="hidden" name="driverName" value="{{ user.firstname }}">
+                        <button type="submit" class="btn btn-custom">View</button>
+                    </form>
+                </div>
+                
+                <form id="fuelForm" novalidate>
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="vnumber">Vehicle Number <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="vnumber" id="vnumber" value="{{ vehicle.vnumber }}" autocomplete="off" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="driverName">Name of the Driver <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="driverName" id="driverName" value="{{ user.firstname }}" autocomplete="off" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="date">Date <span style="color: red;">*</span></label>
+                            <input type="date" class="form-control" name="date" id="date" autocomplete="off" required>
+                            <div class="invalid-feedback">Please enter a valid date.</div>
+                        </div>
+                    </div>
+              
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="billNumber">Bill Number <span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" name="billNumber" id="billNumber" autocomplete="off" required>
+                            <div class="invalid-feedback">Please enter the bill number.</div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="fuelStation">Fuel Station <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="fuelStation" id="fuelStation" autocomplete="off" required>
+                            <div class="invalid-feedback">Please enter the fuel station.</div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="liter">Liters <span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" name="liter" id="liter" autocomplete="off" required>
+                            <div class="invalid-feedback">Please enter the amount in liters.</div>
+                        </div>
+                    </div>
+              
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="amount">Amount <span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" name="amount" id="amount" autocomplete="off" required>
+                            <div class="invalid-feedback">Please enter the amount spent.</div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="readings">Readings (Kilometer) <span style="color: red;">*</span></label>
+                            <input type="number" class="form-control" name="readings" id="readings" autocomplete="off" required>
+                            <div class="invalid-feedback">Please enter the kilometer readings.</div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="fuelimage">Fuel Image <span style="color: red;">*</span></label>
+                            <input type="file" class="form-control-file" id="fuelimage" name="fuelimage" accept="image/*">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-custom ">SUBMIT</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+        {% endif %}
+        
+              
+          <!-- </div> -->
+        
+        
+          <div id="tyre" class="content-section">
+            {% if user %}
+                {% if vehicle %}
+                <div>
+                    <h2 style=color:#04364A><b>Tyre Entry</b></h2>
+                    <form action="/previewtyre/" method="get" class=" mb-4">
+                        <input type="hidden" name="driver_name" value="{{ user.firstname }}">
+                        <button type="submit" class="btn btn-custom ">View</button>
+                    </form>
+                </div>
+                <form id="tyreForm" novalidate>
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="vehiclenumber">Vehicle Number <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="vnumber" id="vnumber" value="{{ vehicle.vnumber }}" autocomplete="off" readonly>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="driverNameTyre">Driver Name <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="driver_name" id="driver_name" value="{{ user.firstname }}" autocomplete="off" readonly>
+                            <div class="invalid-feedback">Please enter the driver's name.</div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="tyrenumber">Tyre Number <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" name="tyrenumber" id="tyrenumber" required>
+                            <div class="invalid-feedback">Please Enter Tyre number</div>
+                        </div>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Tyre Type <span style="color: red;">*</span></label>
+                        <div class="row">
+                            <div class="col-auto mr-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tyre_type" id="newTyre" value="newTyre" required>
+                                    <label class="form-check-label" for="newTyre">New Tyre</label>
+                                </div>
+                            </div>
+                            <div class="col-auto mr-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tyre_type" id="puncture" value="puncture" required>
+                                    <label class="form-check-label" for="puncture">Puncture</label>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tyre_type" id="resole" value="resole" required>
+                                    <label class="form-check-label" for="resole">Resole</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div id="tyre-form" class="tyre-form-section">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="dateTyre">Date <span style="color: red;">*</span></label>
+                                <input type="date" class="form-control" name="date" id="dateTyre" autocomplete="off" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="kilometerTyre">Kilometer <span style="color: red;">*</span></label>
+                                <input type="number" class="form-control" name="kilometer" id="kilometer" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="billNumberTyre">Bill Number <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control" name="bill_number" id="bill_number" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="amountTyre">Amount <span style="color: red;">*</span></label>
+                                <input type="number" class="form-control" name="amount" id="amount" required>
+                            </div>
+                        </div>
+        
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="tyreimage">Bill Image <span style="color: red;">*</span></label>
+                                <input type="file" class="form-control-file" id="tyreimage" name="tyreimage" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-custom ">SUBMIT</button>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+            {% endif %}
+        </div>
+        
+          
+      </main>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var navLinks = document.querySelectorAll('.nav-link');
+      var sections = document.querySelectorAll('.content-section');
+      var tyreFormSection = document.getElementById('tyre-form');
+      var tyreRadioButtons = document.querySelectorAll('input[name="tyre_type"]');
+      var successMessage = document.getElementById('success-message');
+      var messageModal = $('#messageModal');
+      var modalMessage = document.getElementById('modalMessage');
+
+      function showSection(sectionId) {
+        sections.forEach(function(section) {
+          section.classList.remove('active');
+        });
+        document.getElementById(sectionId).classList.add('active');
+      }
+
+      function setActiveLink(sectionId) {
+        navLinks.forEach(function(link) {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === sectionId) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      function handleHashChange() {
+        var sectionId = location.hash.substring(1) || 'about-vehicle';
+        showSection(sectionId);
+        setActiveLink(sectionId);
+      }
+
+      navLinks.forEach(function(link) {
+        link.addEventListener('click', function() {
+          handleHashChange();
+        });
+      });
+
+      tyreRadioButtons.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+          tyreFormSection.style.display = 'block';
+        });
+      });
+
+      window.addEventListener('hashchange', handleHashChange);
+
+      handleHashChange();
+
+      function handleFormSubmission(formId, url) {
+        document.getElementById(formId).addEventListener('submit', function(event) {
+          event.preventDefault();
+          var form = event.target;
+
+          if (!form.checkValidity()) {
+            event.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+          }
+
+          var formData = new FormData(form);
+
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+            },
+            body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              modalMessage.textContent = 'Submitted successfully';
+              messageModal.modal('show');
+              form.reset();
+              form.classList.remove('was-validated');
+            } else {
+              modalMessage.textContent = 'Submission failed';
+              messageModal.modal('show');
+            }
+          })
+          .catch(error => {
+            modalMessage.textContent = 'Submission failed';
+            messageModal.modal('show');
+          });
+        });
+      }
+
+      handleFormSubmission('fuelForm', '/savefuel/');
+      handleFormSubmission('tyreForm', '/savetyre/');
+      // Date input restrictions
+      var dateInput = document.getElementById('date');
+      var dateTyreInput = document.getElementById('dateTyre');
+      var today = new Date().toISOString().split('T')[0];
+      dateInput.setAttribute('min', today);
+      dateInput.setAttribute('max', today);
+      dateTyreInput.setAttribute('min', today);
+      dateTyreInput.setAttribute('max', today);
+      dateInput.addEventListener('keydown', function(e) {
+        e.preventDefault();
+      });
+      dateTyreInput.addEventListener('keydown', function(e) {
+        e.preventDefault();
+      });
+    });
+
+
+  </script>
+
+
+
+
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var wordsForm = document.getElementById('wordsForm');
+      var fuelStationInput = document.getElementById('fuelStation');
+
+      fuelStationInput.addEventListener('input', function() {
+        var value = fuelStationInput.value;
+        // Remove any character that is not a letter or space
+        fuelStationInput.value = value.replace(/[^a-zA-Z\s]/g, '');
+      });
+
+      wordsForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        if (!wordsForm.checkValidity()) {
+          event.stopPropagation();
+          wordsForm.classList.add('was-validated');
+          return;
+        }
+      });
+    });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>        
+</body>
+</html>
